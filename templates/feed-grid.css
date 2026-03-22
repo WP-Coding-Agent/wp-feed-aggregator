@@ -1,0 +1,159 @@
+/**
+ * Default styles for feed aggregator output.
+ * Enqueue via wp_enqueue_style or include in your theme.
+ */
+
+.feed-agg {
+	width: 100%;
+}
+
+/* Grid layout */
+.feed-agg--grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 1.5rem;
+}
+
+/* List layout */
+.feed-agg--list {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.feed-agg--list .feed-agg__item {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+}
+
+.feed-agg--list .feed-agg__media {
+	flex: 0 0 200px;
+}
+
+/* Masonry layout (CSS-only, column-based) */
+.feed-agg--masonry {
+	column-count: var(--feed-columns, 3);
+	column-gap: 1.5rem;
+}
+
+.feed-agg--masonry .feed-agg__item {
+	break-inside: avoid;
+	margin-bottom: 1.5rem;
+}
+
+/* Item styles */
+.feed-agg__item {
+	background: #fff;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+	transition: box-shadow 0.2s ease;
+}
+
+.feed-agg__item:hover {
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.feed-agg__media {
+	display: block;
+	position: relative;
+	overflow: hidden;
+}
+
+.feed-agg__media img {
+	width: 100%;
+	height: auto;
+	display: block;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+}
+
+.feed-agg--list .feed-agg__media img {
+	aspect-ratio: 16 / 10;
+}
+
+.feed-agg__play-overlay {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 3rem;
+	color: white;
+	background: rgba(0, 0, 0, 0.2);
+	pointer-events: none;
+}
+
+.feed-agg__content {
+	padding: 1rem;
+}
+
+.feed-agg__title {
+	font-size: 1rem;
+	font-weight: 600;
+	margin: 0 0 0.5rem;
+	line-height: 1.3;
+}
+
+.feed-agg__title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.feed-agg__title a:hover {
+	text-decoration: underline;
+}
+
+.feed-agg__body {
+	font-size: 0.875rem;
+	color: #6b7280;
+	margin: 0 0 0.75rem;
+	line-height: 1.5;
+}
+
+.feed-agg__meta {
+	display: flex;
+	gap: 0.75rem;
+	font-size: 0.75rem;
+	color: #9ca3af;
+}
+
+.feed-agg__author {
+	font-weight: 600;
+}
+
+.feed-agg-empty {
+	text-align: center;
+	color: #9ca3af;
+	padding: 2rem;
+}
+
+@media (max-width: 640px) {
+	.feed-agg--grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0.75rem;
+	}
+
+	.feed-agg--masonry {
+		column-count: 2;
+	}
+
+	.feed-agg--list .feed-agg__item {
+		flex-direction: column;
+	}
+
+	.feed-agg--list .feed-agg__media {
+		flex: none;
+	}
+}
+
+@media (max-width: 400px) {
+	.feed-agg--grid {
+		grid-template-columns: 1fr;
+	}
+
+	.feed-agg--masonry {
+		column-count: 1;
+	}
+}

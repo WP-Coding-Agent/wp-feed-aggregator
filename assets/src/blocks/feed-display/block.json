@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "feed-aggregator/feed-display",
+  "version": "1.0.0",
+  "title": "Feed Display",
+  "category": "widgets",
+  "icon": "rss",
+  "description": "Display aggregated feed items in a customizable grid, list, or masonry layout.",
+  "keywords": ["feed", "instagram", "youtube", "rss", "social", "aggregator"],
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"],
+    "spacing": { "padding": true, "margin": true }
+  },
+  "attributes": {
+    "feedId": { "type": "string", "default": "" },
+    "layout": { "type": "string", "default": "grid", "enum": ["grid", "list", "masonry"] },
+    "columns": { "type": "integer", "default": 3 },
+    "limit": { "type": "integer", "default": 12 },
+    "contentType": { "type": "string", "default": "" }
+  },
+  "textdomain": "feed-aggregator"
+}
