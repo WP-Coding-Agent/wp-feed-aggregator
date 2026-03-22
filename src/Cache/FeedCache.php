@@ -60,18 +60,32 @@ final class FeedCache
         $inserted = 0;
         foreach ($items as $item) {
             $data = $item->toArray();
-            $data['feed_id'] = $feed['id'];
+            $data['feed_id'] = (int) $feed['id'];
 
-            // Use INSERT IGNORE to skip duplicates.
-            $columns = implode(', ', array_keys($data));
-            $placeholders = implode(', ', array_fill(0, count($data), '%s'));
-
-            $sql = $wpdb->prepare(
-                "INSERT IGNORE INTO {$items_table} ({$columns}) VALUES ({$placeholders})",
-                ...array_values($data)
+            // Use INSERT IGNORE to skip duplicates on (feed_id, external_id).
+            // wpdb->insert doesn't support IGNORE, so we use a safe prepared query
+            // with hardcoded column names from FeedItem::toArray().
+            $result = $wpdb->query(
+                $wpdb->prepare(
+                    "INSERT IGNORE INTO {$items_table}
+                        (feed_id, external_id, content_type, title, body, media_url,
+                         media_type, permalink, author_name, author_avatar, metadata, published_at)
+                     VALUES (%d, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                    $data['feed_id'],
+                    $data['external_id'],
+                    $data['content_type'],
+                    $data['title'],
+                    $data['body'],
+                    $data['media_url'],
+                    $data['media_type'],
+                    $data['permalink'],
+                    $data['author_name'],
+                    $data['author_avatar'],
+                    $data['metadata'],
+                    $data['published_at']
+                )
             );
 
-            $result = $wpdb->query($sql);
             if ($result) {
                 ++$inserted;
             }

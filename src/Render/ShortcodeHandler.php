@@ -103,9 +103,8 @@ final class ShortcodeHandler
         $body      = esc_html(wp_trim_words($item['body'] ?? '', 30));
         $mediaUrl  = esc_url($item['media_url'] ?? '');
         $author    = esc_html($item['author_name'] ?? '');
-        $date      = esc_html(
-            mysql2date(get_option('date_format'), $item['published_at'] ?? '')
-        );
+        $raw_date  = $item['published_at'] ?? '';
+        $date      = ! empty( $raw_date ) ? esc_html( mysql2date( get_option( 'date_format' ), $raw_date ) ) : '';
         $type      = esc_attr($item['content_type'] ?? 'post');
 
         ob_start();

@@ -30,6 +30,17 @@ final class Plugin
         $shortcode = new ShortcodeHandler();
         add_shortcode('feed_aggregator', [$shortcode, 'render']);
 
+        // Enqueue frontend styles when shortcode or block is used.
+        add_action('wp_enqueue_scripts', static function (): void {
+            wp_register_style(
+                'feed-aggregator-grid',
+                FEED_AGG_URL . 'templates/feed-grid.css',
+                [],
+                FEED_AGG_VERSION
+            );
+            wp_enqueue_style('feed-aggregator-grid');
+        });
+
         // Gutenberg block.
         add_action('init', static function (): void {
             if (file_exists(FEED_AGG_DIR . 'assets/src/blocks/feed-display/block.json')) {
